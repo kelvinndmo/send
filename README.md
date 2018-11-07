@@ -21,3 +21,6 @@
 - The user can only cancel or change the destination of a parcel delivery when the parcel’s status is yet to   be marked as delivered.
 - Only the user who created the parcel delivery order can cancel the order.
 
+## Author
+
+### Kelvin Onkundi Ndemo
