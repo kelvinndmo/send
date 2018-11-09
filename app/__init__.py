@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from instance.config import app_config
+from config import app_config
 from flask_jwt_extended import JWTManager
 from .customer.customer_views import PostParcel, SpecificUserorders, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
 from .admin.admin_views import CompleteOrder, AcceptStatus, MarkOrderInTransit, DeclineOrder
