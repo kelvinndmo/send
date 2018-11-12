@@ -1,4 +1,5 @@
 import unittest
+
 import json
 
 from app import create_app
@@ -22,9 +23,9 @@ class TestAdmin(unittest.TestCase):
         """ signup function """
 
         signup_data = {
-            "username": "kelvin123",
-            "email": "kelvin@gmial.com",
-            "password": "kelvin1234",
+            "username": "kimame123",
+            "email": "kimame@gmial.com",
+            "password": "Kimame1234",
             "is_admin": 1
         }
         response = self.client.post(
@@ -76,15 +77,167 @@ class TestAdmin(unittest.TestCase):
                      'Authorization': f'Bearer {token}'}
         )
 
-    # def test_mark_order_as_in_transit(self):
-    #     '''test for parcel orders marked intransit by admin'''
+    def test_update_the_status_of_an_order(self):
+        """ Test update food order status """
+        token = self.get_token()
 
-    #     res = self.client.put(
-    #         "/api/v1/orders/1/intransit",
+        self.post_parcel()
+        status_data = {
+            "status": "Pending"
+        }
 
-    #         headers={"content-type": "application/json"}
-    #     )
+        response = self.client.put(
+            "/api/v1/orders/1/approved",
+            data=json.dumps(status_data),
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
 
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(json.loads(res.data)[
-    #                      'message'], "please approve the order first")
+        self.assertEqual(response.status_code, 200)
+
+    def test_complete_order(self):
+        '''complete an already approved order'''
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status": "In Transit"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/1/completed",
+            data=json.dumps(status_data),
+            headers={"content-type": 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.data)[
+                         'message'], "order already declined")
+
+    def test_complete_order_non_existing(self):
+        '''complete an already approved order'''
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status": "In Transit"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/11111111111111111111111/completed",
+            data=json.dumps(status_data),
+            headers={"content-type": 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_admin_decline_order(self):
+        """ Test update food order status """
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status": "Pending"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/1/declined",
+            data=json.dumps(status_data),
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_admin_decline_order_invalid(self):
+        """ Test update food order status """
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status": "Pending"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/11111111111111/declined",
+            data=json.dumps(status_data),
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_admin_mark_order_complete(self):
+        """ Test update food order status """
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status": "approved"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/1/completed",
+            data=json.dumps(status_data),
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_admin_mark_order_complete_non_exist(self):
+        """ Test update food order status """
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status": "approved"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/111111111111/completed",
+            data=json.dumps(status_data),
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_admin_mark_order_complete_pending(self):
+        """ Test update food order status """
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status": "pending"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/1/completed",
+            data=json.dumps(status_data),
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+    def update_status_non_exisiting_order(self):
+        '''update status of order not existing'''
+        token = self.get_token()
+
+        self.post_parcel()
+        status_data = {
+            "status":"Pending"
+        }
+
+        response = self.client.put(
+            "/api/v1/orders/1111111111111111111/approved",
+            data=json.dumps(status_data),
+            headers={'content-type': 'application/json',
+                    'Authorization':f'Bearer {token}'
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
