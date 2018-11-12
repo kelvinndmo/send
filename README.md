@@ -1,6 +1,6 @@
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 [![Build Status](https://travis-ci.org/kelvinndmo/send.svg?branch=challenge-two-develop)](https://travis-ci.org/kelvinndmo/send)
-[![Coverage Status](https://coveralls.io/repos/github/kelvinndmo/fast-food-2/badge.svg?branch=develop)](https://coveralls.io/github/kelvinndmo/fast-food-2?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/kelvinndmo/send/badge.svg?branch=challenge-two-develop)](https://coveralls.io/github/kelvinndmo/send?branch=challenge-two-develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a236552c6eda78af4c69/maintainability)](https://codeclimate.com/github/kelvinndmo/fast-food-2/maintainability)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d5b456c6aa5a4648a45f2c72346dba4a)](https://www.codacy.com/app/kelvinndmo/fast-food-2?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kelvinndmo/fast-food-2&amp;utm_campaign=Badge_Grade)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
