@@ -140,3 +140,17 @@ class SpecificUserorders(Resource):
     def get(self, id):
        return {"orders":[order.serialize() for order in orders if get_jwt_identity() == id]}
 
+class CancelOrder(Resource):
+
+    @jwt_required
+    def put(self, id):
+        '''cancel a specific order by id'''
+        
+        order = Order().get_by_id(id)
+        if order:
+            if order.status != "Pending":
+                return {"message": "order already {}".format(order.status)}
+            order.status == "canceled"
+            return {"message":"order canceled!"},200
+        return {"message":"order not found"},404
+
