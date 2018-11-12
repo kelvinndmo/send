@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Api
 from config import app_config
 from flask_jwt_extended import JWTManager
-from .customer.customer_views import PostParcel, SpecificUserorders, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
+from .customer.customer_views import PostParcel,CancelOrder, SpecificUserorders, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
 from .admin.admin_views import CompleteOrder, AcceptStatus, MarkOrderInTransit, DeclineOrder
 from app.auth.auth_views import Login, SignUp
 
@@ -34,6 +34,7 @@ def create_app(config_stage):
     api.add_resource(AcceptStatus, '/api/v1/orders/<int:id>/approved')
     api.add_resource(MarkOrderInTransit, '/api/v1/orders/<int:id>/intransit')
     api.add_resource(InTransitOrders, '/api/v1/orders/intransit')
+    api.add_resource(CancelOrder, '/api/v1/orders/cancel/<int:id>')
     api.add_resource(DeclineOrder, '/api/v1/orders/<int:id>/declined')
 
     return app
