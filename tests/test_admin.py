@@ -22,9 +22,9 @@ class TestAdmin(unittest.TestCase):
         """ signup function """
 
         signup_data = {
-            "username": "kimame123",
-            "email": "kimame@gmial.com",
-            "password": "Kimame1234",
+            "username": "kelvin123",
+            "email": "kelvin@gmial.com",
+            "password": "kelvin1234",
             "is_admin": 1
         }
         response = self.client.post(
