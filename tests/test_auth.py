@@ -1,6 +1,5 @@
-
-
 import unittest
+
 import json
 
 from app import create_app
@@ -85,11 +84,8 @@ class TestUser(unittest.TestCase):
             data=json.dumps(data),
             headers={'content-type': 'application/json'}
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 201)
 
-        self.assertEqual(json.loads(response.data)[
-                         "message"], "user with kimame@gmail.com"
-                         " already exists")
 
     def test_existing_username(self):
         """ Test singup with existing username """
