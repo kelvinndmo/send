@@ -22,9 +22,9 @@ class TestFoodOrder(unittest.TestCase):
         """ signup function """
 
         signup_data = {
-            "username": "kimame123",
-            "email": "kimame@gmial.com",
-            "password": "Kimame1234",
+            "username": "kelvin123",
+            "email": "kelvin@gmial.com",
+            "password": "Kelvin1234",
             "is_admin": 1
         }
         response = self.client.post(
@@ -38,8 +38,8 @@ class TestFoodOrder(unittest.TestCase):
         """ login function """
 
         login_data = {
-            "username": "kimame123",
-            "password": "Kimame1234"
+            "username": "kelvin123",
+            "password": "Kelvin1234"
         }
 
         response = self.client.post(
