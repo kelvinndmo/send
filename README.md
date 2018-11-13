@@ -53,9 +53,9 @@ git clone https://github.com/kelvinndmo/send.git
 ## Running the application
 
 ```bash
-export FLASK_APP="run.py"
-export FLASK_DEBUG=1
-export APP_SETTINGS="development"
+$ export FLASK_APP="run.py"
+$ export FLASK_DEBUG=1
+$ export APP_SETTINGS="development"
 ```
 ### Open Terminal and type
 $ flask run
