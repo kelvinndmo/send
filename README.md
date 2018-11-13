@@ -28,6 +28,17 @@
 - The user can only cancel or change the destination of a parcel delivery when the parcel’s status is yet to   be marked as delivered.
 - Only the user who created the parcel delivery order can cancel the order.
 
+### .env file
+source venv/bin/activate
+
+
+export FLASK_APP="run.py"
+export FLASK_DEBUG=1
+export APP_SETTINGS="development"
+
+
+
+
 ## Author
 
 ### Kelvin Onkundi Ndemo
