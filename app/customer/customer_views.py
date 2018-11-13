@@ -148,9 +148,10 @@ class CancelOrder(Resource):
         
         order = Order().get_by_id(id)
         if order:
+
             if order.status != "Pending":
                 return {"message": "order already {}".format(order.status)}
-            order.status == "canceled"
-            return {"message":"order canceled!"},200
-        return {"message":"order not found"},404
 
+            order.status = "canceled"
+            return {"message": "Order canceled"},200
+        return {"message":"order not found"},404
