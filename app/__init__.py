@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api
 from config import app_config
 from flask_jwt_extended import JWTManager
-from .customer.customer_views import PostParcel,CancelOrder, SpecificUserorders, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
+from .customer.customer_views import PostParcel, CancelOrder, SpecificUserorders, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
 from .admin.admin_views import CompleteOrder, AcceptStatus, MarkOrderInTransit, DeclineOrder
 from app.auth.auth_views import Login, SignUp
 
@@ -17,7 +17,6 @@ def create_app(config_stage):
     app.config.from_object(app_config[config_stage])
 
     jwt.init_app(app)
-
 
     api = Api(app)
 
@@ -36,5 +35,13 @@ def create_app(config_stage):
     api.add_resource(InTransitOrders, '/api/v1/parcels/intransit')
     api.add_resource(CancelOrder, '/parcels/<int:id>/cancel')
     api.add_resource(DeclineOrder, '/api/v1/parcels/<int:id>/declined')
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return jsonify(
+            {
+                "message":"Kindly please check the URL,its incorrect"
+            }
+        ), 404
 
     return app
