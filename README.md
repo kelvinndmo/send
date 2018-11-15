@@ -27,18 +27,72 @@
 
 - The user can only cancel or change the destination of a parcel delivery when the parcel’s status is yet to   be marked as delivered.
 - Only the user who created the parcel delivery order can cancel the order.
+## Prerequisite
 
-### .env file
-source venv/bin/activate
+- [Python3.6](https://www.python.org/downloads/release/python-365/)
+- [Virtual Environment](https://virtualenv.pypa.io/en/stable/installation/)
+
+# Installation and Setup
+
+Clone the repository below
+
+```
+git clone https://github.com/kelvinndmo/send.git
+```
+
+### Create and activate a virtual environment
+
+    virtualenv env --python=python3.6
+
+    source env/bin/activate
+
+### Install required Dependencies
+
+    pip install -r requirements.txt
+
+## Running the application
+
+```bash
+$ export FLASK_APP="run.py"
+$ export FLASK_DEBUG=1
+$ export APP_SETTINGS="development"
+```
+### Open Terminal and type
+$ flask run
+
+### Open postman and use the below endpoints.
 
 
-export FLASK_APP="run.py"
-export FLASK_DEBUG=1
-export APP_SETTINGS="development"
+## Endpoints Available
 
+| Method | Endpoint                        | Description                           | Roles         |
+| ------ | ------------------------------- | ------------------------------------- | ------------  |
+| POST   | /api/v1/auth/signup             | sign up a user                        | users         |
+| POST   | /api/v1/placeorder/orders       | post a parcel order                   | users         |
+| GET    |/api/v1/orders/userorders/2      | Get as specific users orders          | users/admin   |
+| GET    | /api/v1/acceptedorders          | get accepted parcel orders            | User          |
+| GET    | /api/v1/orders/declined         | return a list of declined orders      |user           |
+| PUT    |/api/v1/orders/1/declined        | Decline a specific order              | Admin         |
+| PUT    | /api/v1/orders/cancel/1         | cancel a spefic order                 | Users         |
+| POST   | /api/v1/auth/login              | Login to the application              | Users/Admin   |
+| GET    | /api/v1/orders/1                | Get a specific order by id            | user/Admin    |
+| GET    | api/v1/orders/intransit         | get orders in transit                 | Admin/users   |
+| DELETE | /api/v1/orders/1                | delete a specific order               | Admin/users   |
+| PUT    | /api/v1/orders/1/completed      | complete an order                     | Admin         |
+| PUT    | /api/v1/orders/1/intransit      | approve an order to be in transit     | Admin         |
+| PUT    | /api/v1/orders/2/approved       | approve a pending order               | Admin         |
+| GET    | /api/v1/orders                  | Get a list of all orders              | Admin/users            |
 
+### Testing
 
+### Testing
 
-## Author
+    nosetests
 
-### Kelvin Onkundi Ndemo
+    - Testing with coverage
+
+    nosetests --with-coverage --cover-package=app
+
+### Author
+
+Kelvin Onkundi Ndemo
