@@ -1,21 +1,33 @@
+import os
+
+
 class Config:
-    pass
+    """Parent configuration class."""
+    DEBUG = False
+    CSRF_ENABLED = True
+    SECRET_KEY = "CHANGE-TO-YOUR-LIKING******$%#%^******"
+
 
 class DevelopmentConfig(Config):
-    DEBUG=True
-    TESTING=False
+    """Configurations for Development."""
+    DEBUG = True
+
 
 class TestingConfig(Config):
-    DEBUG=True
-    TESTING=True
+    """Configurations for Testing, with a separate test database."""
+    TESTING = True
+    DEBUG = True
+
 
 class ProductionConfig(Config):
-    pass
+    """Configurations for Production."""
+    DEBUG = False
+    TESTING = False
 
 
-app_config={
-    "development":DevelopmentConfig,
-    "testing":TestingConfig,
-    "production":ProductionConfig,
-    "default":DevelopmentConfig
+app_config = {
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'production': ProductionConfig,
+    'default': DevelopmentConfig
 }
