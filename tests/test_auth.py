@@ -22,9 +22,9 @@ class TestUser(unittest.TestCase):
     def signup(self):
         """ signup method"""
         signup_data = {
-            "username": "kimame123",
-            "email": "kimame@gmail.com",
-            "password": "Kimame1234",
+            "username": "novak254",
+            "email": "novak@gmail.com",
+            "password": "Novak2544",
             "is_admin": 1
         }
         response = self.client.post(
@@ -37,8 +37,8 @@ class TestUser(unittest.TestCase):
     def login(self):
         """ login method """
         login_data = {
-            "username": "kimame123",
-            "password": "Kimame1234"
+            "username": "novak254",
+            "password": "Novak2544"
         }
         response = self.client.post(
             "api/v1/auth/login",
@@ -54,11 +54,6 @@ class TestUser(unittest.TestCase):
         token = json.loads(response.data).get("token", None)
         return token
 
-    # def test_signup(self):
-    #     """ Test for signup """
-    #     response = self.signup()
-    #     self.assertEqual(response.status_code, 201)
-
     def test_login(self):
         """ Test for login """
         self.signup()
@@ -72,10 +67,9 @@ class TestUser(unittest.TestCase):
     def test_email_exists(self):
         """ Test signup with an existing email """
         data = {
-            "username": "daviskk",
-            "email": "kimame@gmail.com",
-            "password": "Kwemoi12",
-            "is_admin": 1
+            "username": "ndemo",
+            "email": "novakkk@gmail.com",
+            "password": "Novak25444"
         }
         self.signup()
 
@@ -90,10 +84,9 @@ class TestUser(unittest.TestCase):
     def test_existing_username(self):
         """ Test singup with existing username """
         data = {
-            "username": "kimame123",
-            "email": "kwemoi@gmial.com",
-            "password": "Kwemoi12",
-            "is_admin": 1
+            "username": "novak254",
+            "email": "novak@gmial.com",
+            "password": "Movine123"
         }
 
         self.signup()
@@ -107,13 +100,13 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
 
         self.assertEqual(json.loads(response.data)[
-                         "message"], "user kimame123 already exists")
+                         "message"], "user novak254 already exists")
 
     def test_non_existing_user_login(self):
         """ Test if user does not exist """
         data = {
-            "username": "kimame",
-            "password": "Kimame123"
+            "username": "Novak",
+            "password": "novak254"
         }
 
         self.signup()
@@ -133,9 +126,8 @@ class TestUser(unittest.TestCase):
         """ Test if username is inavalid """
         data = {
             "username": "*****1",
-            "email": "davis@gmail.com",
-            "password": "kimame123",
-            "is_admin": 1
+            "email": "novak@gmail.com",
+            "password": "novak254"
         }
 
         response = self.client.post(
@@ -152,10 +144,9 @@ class TestUser(unittest.TestCase):
 
     def test_invalid_email(self):
         data = {
-            "username": "daviskk",
-            "email": "davis",
-            "password": "kimame123",
-            "is_admin": 1
+            "username": "novak",
+            "email": ".kelv",
+            "password": "novak254"
         }
 
         response = self.client.post(
@@ -171,10 +162,9 @@ class TestUser(unittest.TestCase):
 
     def test_invalid_password(self):
         data = {
-            "username": "mwanzia",
-            "email": "mwanzia@gmail.com",
-            "password": "aimame123",
-            "is_admin": 1
+            "username": "iwobi",
+            "email": "iwobi@gmail.com",
+            "password": "@"
         }
 
         response = self.client.post(
