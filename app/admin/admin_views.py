@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restful import Resource
-from models.models import Order, orders, destinations
+from models.models import Order, orders
 from utils import validators
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import datetime
