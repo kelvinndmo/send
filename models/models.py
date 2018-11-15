@@ -5,8 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 orders = []
 Users = []
 user_orders = []
-destinations = ['keroka', 'kisii', 'Nairobi',
-                'ogembo', 'mombasa', 'nakuru', 'kisumu', 'kiambu']
+
 
 
 class User:
@@ -20,7 +19,6 @@ class User:
         self.email = email
         if password:
             self.password_hash = generate_password_hash(password)
-        self.is_admin = is_admin
         self.id = User.user_id
 
         User.user_id += 1
@@ -74,7 +72,3 @@ class Order:
         for order in orders:
             if order.id == order_id:
                 return order
-
-
-
-
