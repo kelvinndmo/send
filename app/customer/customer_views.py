@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from models.models import Order, orders, destinations,user_orders
+from models.models import Order, orders,user_orders
 from utils import validators
 import datetime
 
@@ -23,7 +23,7 @@ class PostParcel(Resource):
 
         if not validate.valid_destination_name(destination):
             return {'message': "destination is invalid"}, 400
-
+        
         if not validate.valid_origin_name(origin):
             return {'message': "invalid origin name"}, 400
 
@@ -34,11 +34,8 @@ class PostParcel(Resource):
             return {'message': "Invalid weight"}, 400
 
         order = Order(origin, price, destination, weight)
-
-        if order.destination in destinations:
-            orders.append(order)
-            return {"message": "keep tight!Your parcel order has been placed!"}, 201
-        return {"message": "sorry we do not deliver to {}".format(order.destination)}
+        orders.append(order)
+        return {"message": "keep tight!Your parcel order has been placed!"}, 201
 
 
 class GetOrders(Resource):
@@ -60,7 +57,7 @@ class SpecificOrder(Resource):
         if order:
             return {"order": order.serialize()}, 200
 
-        return {"message": "Order not found"}, 404
+        return {"message": "order of id {} not found".format(id)}, 404
 
     @jwt_required
     def delete(self, id):
@@ -71,7 +68,7 @@ class SpecificOrder(Resource):
         if order:
             orders.remove(order)
             return {"message": "order deleted successfully"}, 200
-        return {"message": "Order not found"}, 404
+        return {"message": "order of id {} not found".format(id)}, 404
 
     @jwt_required
     def put(self, id):
@@ -79,11 +76,10 @@ class SpecificOrder(Resource):
         order = Order().get_by_id(id)
 
         if order:
-            if order.status != "Pending":
-                return {"message": "order already {}".format(order.status)}, 200
+    
             order.status = "approved"
             return {"message": "your parcel order has been approved"}, 200
-        return {"message": "order not found"}, 404
+        return {"message": "order of id {} not found".format(id)}, 404
 
 
 class InTransitOrders(Resource):
@@ -149,9 +145,6 @@ class CancelOrder(Resource):
         order = Order().get_by_id(id)
         if order:
 
-            if order.status != "Pending":
-                return {"message": "order already {}".format(order.status)}
-
             order.status = "canceled"
             return {"message": "Order canceled"},200
-        return {"message":"order not found"},404
+        return {"message":"order of id {} not found".format(id)},404
