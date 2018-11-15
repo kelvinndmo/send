@@ -60,7 +60,7 @@ class TestFoodOrder(unittest.TestCase):
         return token
 
     def test_place_parcel_order(self):
-        '''test for placing a parcel order'''
+        '''test for invalid destination'''
 
         token = self.get_token()
 
@@ -72,7 +72,7 @@ class TestFoodOrder(unittest.TestCase):
         }
 
         res = self.client.post(
-            "/api/v1/placeorder/orders",
+            "/api/v1/parcels",
             data=json.dumps(data),
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'}
@@ -82,13 +82,101 @@ class TestFoodOrder(unittest.TestCase):
         self.assertEqual(json.loads(res.data)[
                          'message'], "keep tight!Your parcel order has been placed!")
 
+    def test_place_parcel_order_invalid_dest(self):
+        '''test for placing a parcel order invalid destination'''
+
+        token = self.get_token()
+
+        data = {
+            "origin": "nairobi",
+            "price": 200,
+            "destination": "**********",
+            "weight": 20
+        }
+
+        res = self.client.post(
+            "/api/v1/parcels",
+            data=json.dumps(data),
+            headers={"content-type": "application/json",
+                     'Authorization': f'Bearer {token}'}
+        )
+        print(res.data)
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(json.loads(res.data)[
+                         'message'], "destination is invalid")
+
+        def test_place_parcel_order_invalid_origin(self):
+            '''test for placing a parcel order invalid origin'''
+
+        token = self.get_token()
+
+        data = {
+            "origin": "nairobi****",
+            "price": 200,
+            "destination": "kisii",
+            "weight": 20
+        }
+
+        res = self.client.post(
+            "/api/v1/parcels",
+            data=json.dumps(data),
+            headers={"content-type": "application/json",
+                     'Authorization': f'Bearer {token}'}
+        )
+
+        def test_place_parcel_order_invalid_price(self):
+            '''test for placing a parcel order invalid price'''
+
+        token = self.get_token()
+
+        data = {
+            "origin": "nairobi",
+            "price": "**",
+            "destination": "kisii",
+            "weight": 20
+        }
+
+        res = self.client.post(
+            "/api/v1/parcels",
+            data=json.dumps(data),
+            headers={"content-type": "application/json",
+                     'Authorization': f'Bearer {token}'}
+        )
+        print(res.data)
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(json.loads(res.data)[
+                         'message'], "Invalid price")
+
+        def test_place_parcel_order_invalid_price(self):
+            '''test for placing a parcel order invalid price'''
+
+        token = self.get_token()
+
+        data = {
+            "origin": "nairobi",
+            "price": 30,
+            "destination": "kisii",
+            "weight": "we"
+        }
+
+        res = self.client.post(
+            "/api/v1/parcels",
+            data=json.dumps(data),
+            headers={"content-type": "application/json",
+                     'Authorization': f'Bearer {token}'}
+        )
+        print(res.data)
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(json.loads(res.data)[
+                         'message'], "Invalid weight")
+
     def test_get_all_orders(self):
         '''get all placed orders'''
 
         token = self.get_token()
 
         res = self.client.get(
-            "/api/v1/orders",
+            "/api/v1/parcels",
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'}
         )
@@ -106,37 +194,26 @@ class TestFoodOrder(unittest.TestCase):
             "weight": 20
         }
         res = self.client.post(
-            "/api/v1/placeorder/orders",
+            "/api/v1/parcels",
             data=json.dumps(data),
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'}
         )
         return res
 
-    # def test_order_by_id(self):
-    #     '''get parcel order by id'''
+    def test_order_by_id(self):
+        '''get parcel order by id'''
 
-    #     token = self.get_token()
-    #     self.post_parcel()
-
-    #     res = self.client.get(
-    #         "/api/v1/orders/1",
-    #         headers={"content-type": "application/json",
-    #                  'Authorization': f'Bearer {token}'}
-    #     )
-
-    #     print(res.data)
-    #     self.assertEqual(res.status_code, 200)
-
-    def test_declined_orders_by_admin(self):
-        '''test for returning a list of parcel orders declined by admin'''
         token = self.get_token()
+        self.post_parcel()
 
         res = self.client.get(
-            "/api/v1/orders/declined",
+            "/api/v1/parcels/1",
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'}
         )
+
+        print(res.data)
         self.assertEqual(res.status_code, 200)
 
     def test_get_accepted_orders(self):
@@ -150,13 +227,35 @@ class TestFoodOrder(unittest.TestCase):
         )
         self.assertEqual(res.status_code, 200)
 
+    def accept_order(self):
+        """ accept an order """
+        token = self.get_token()
+
+        res = self.client.put(
+            "api/v1/orders/1/approved",
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+        return res
+
+    def cancel_order(self):
+        """ cancel an order """
+        token = self.get_token()
+
+        res = self.client.put(
+            "/parcels/1/cancel",
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+        return res
+
     def test_completed_orders(self):
         '''test for returning a list of completed orders'''
 
         token = self.get_token()
 
         res = self.client.get(
-            "/api/v1/orders/completedorders",
+            "/api/v1/parcels/completedorders",
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'}
         )
@@ -167,32 +266,31 @@ class TestFoodOrder(unittest.TestCase):
         token = self.get_token()
 
         res = self.client.get(
-            "/api/v1/orders/111",
+            "/api/v1/parcels/111",
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'}
         )
         self.assertEqual(res.status_code, 404)
         self.assertEqual(json.loads(res.data)[
-                         'message'], "Order not found")
-
-    def test_declined_orders_list(self):
-        '''testing for declined order'''
-        token = self.get_token()
-
-        res = self.client.get(
-            "/api/v1/orders/declined",
-            headers={"content-type": "application/json",
-                     'Authorization': f'Bearer {token}'
-                     }
-        )
-        self.assertEqual(res.status_code, 200)
+                         'message'], "order of id 111 not found")
 
     def test_get_orders_in_transit(self):
 
         token = self.get_token()
 
         res = self.client.get(
-            "/api/v1/orders/intransit",
+            "/api/v1/parcels/intransit",
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'})
         self.assertEqual(res.status_code, 200)
+
+    def test_cancel_parcel_order(self):
+        """test for cancelling a specific order"""
+        token = self.get_token()
+        self.post_parcel()
+
+        res = self.cancel_order()
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(json.loads(res.data)[
+                         'message'], "Order canceled")
