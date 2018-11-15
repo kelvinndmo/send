@@ -71,7 +71,7 @@ class TestAdmin(unittest.TestCase):
             "weight": 20
         }
         res = self.client.post(
-            "/api/v1/placeorder/orders",
+            "/api/v1/parcels",
             data=json.dumps(data),
             headers={"content-type": "application/json",
                      'Authorization': f'Bearer {token}'}
@@ -87,7 +87,7 @@ class TestAdmin(unittest.TestCase):
         }
 
         response = self.client.put(
-            "/api/v1/orders/1/approved",
+            "/api/v1/parcels/1/approved",
             data=json.dumps(status_data),
             headers={'content-type': 'application/json',
                      'Authorization': f'Bearer {token}'}
@@ -105,7 +105,7 @@ class TestAdmin(unittest.TestCase):
         }
 
         response = self.client.put(
-            "/api/v1/orders/1/completed",
+            "/api/v1/parcels/1/completed",
             data=json.dumps(status_data),
             headers={"content-type": 'application/json',
                      'Authorization': f'Bearer {token}'}
@@ -143,7 +143,7 @@ class TestAdmin(unittest.TestCase):
         }
 
         response = self.client.put(
-            "/api/v1/orders/1/declined",
+            "/api/v1/parcels/1/declined",
             data=json.dumps(status_data),
             headers={'content-type': 'application/json',
                      'Authorization': f'Bearer {token}'}
@@ -179,7 +179,7 @@ class TestAdmin(unittest.TestCase):
         }
 
         response = self.client.put(
-            "/api/v1/orders/1/completed",
+            "/api/v1/parcels/1/completed",
             data=json.dumps(status_data),
             headers={'content-type': 'application/json',
                      'Authorization': f'Bearer {token}'}
@@ -215,7 +215,7 @@ class TestAdmin(unittest.TestCase):
         }
 
         response = self.client.put(
-            "/api/v1/orders/1/completed",
+            "/api/v1/parcels/1/completed",
             data=json.dumps(status_data),
             headers={'content-type': 'application/json',
                      'Authorization': f'Bearer {token}'}
@@ -229,15 +229,15 @@ class TestAdmin(unittest.TestCase):
 
         self.post_parcel()
         status_data = {
-            "status":"Pending"
+            "status": "Pending"
         }
 
         response = self.client.put(
             "/api/v1/orders/1111111111111111111/approved",
             data=json.dumps(status_data),
             headers={'content-type': 'application/json',
-                    'Authorization':f'Bearer {token}'
-            }
+                     'Authorization': f'Bearer {token}'
+                     }
         )
 
         self.assertEqual(response.status_code, 200)
