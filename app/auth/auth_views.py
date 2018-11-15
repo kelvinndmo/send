@@ -24,8 +24,6 @@ class SignUp(Resource):
                         help="This field can not be left bank")
     parser.add_argument("password", type=str, required=True,
                         help="This field can not be left bank")
-    parser.add_argument("is_admin", type=int, required=True,
-                        help="This field can not be left bank")
 
     def post(self):
         """ Create a new user"""
@@ -34,7 +32,6 @@ class SignUp(Resource):
         username = data["username"]
         email = data["email"]
         password = data["password"]
-        is_admin = data["is_admin"]
 
         validate = validators.Validators()
 
@@ -49,16 +46,13 @@ class SignUp(Resource):
             return {"message": "password should start with a capital letter"
                     " and include a number"}, 400
 
-        if is_admin not in range(0, 2):
-            return {"message": " must be one or zero"}, 400
-
         if User().get_by_username(username):
             return {"message": f"user {username} already exists"}, 400
 
         if User().get_by_email(email):
             return {"message": f"user with {email} already exists"}, 400
 
-        user = User(username, email, password, bool(is_admin))
+        user = User(username, email, password)
 
         Users.append(user)
 
