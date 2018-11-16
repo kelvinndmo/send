@@ -29,11 +29,11 @@ def create_app(config_stage):
     api.add_resource(CompleteOrder, '/api/v1/parcels/<int:id>/completed')
     api.add_resource(CompletedOrders, '/api/v1/parcels/completedorders')
     api.add_resource(DeclinedOrders, '/api/v1/parcels/declined')
-    api.add_resource(SpecificUserorders, '/users/<int:id>/parcels')
+    api.add_resource(SpecificUserorders, '/api/v1/users/<int:id>/parcels')
     api.add_resource(AcceptStatus, '/api/v1/parcels/<int:id>/approved')
     api.add_resource(MarkOrderInTransit, '/api/v1/parcels/<int:id>/intransit')
     api.add_resource(InTransitOrders, '/api/v1/parcels/intransit')
-    api.add_resource(CancelOrder, '/parcels/<int:id>/cancel')
+    api.add_resource(CancelOrder, '/api/v1/parcels/<int:id>/cancel')
     api.add_resource(DeclineOrder, '/api/v1/parcels/<int:id>/declined')
 
     @app.errorhandler(404)
