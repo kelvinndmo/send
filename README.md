@@ -68,20 +68,20 @@ $ flask run
 | Method | Endpoint                        | Description                           | Roles         |
 | ------ | ------------------------------- | ------------------------------------- | ------------  |
 | POST   | /api/v1/auth/signup             | sign up a user                        | users         |
-| POST   | /api/v1/placeorder/orders       | post a parcel order                   | users         |
-| GET    |/api/v1/orders/userorders/2      | Get as specific users orders          | users/admin   |
-| GET    | /api/v1/acceptedorders          | get accepted parcel orders            | User          |
-| GET    | /api/v1/orders/declined         | return a list of declined orders      |user           |
-| PUT    |/api/v1/orders/1/declined        | Decline a specific order              | Admin         |
-| PUT    | /api/v1/orders/cancel/1         | cancel a spefic order                 | Users         |
+| POST   | /api/v1/parcels                 | post a parcel order                   | users         |
+| GET    |/api/v1/orders/users/<id>/parcels| Get as specific users orders          | users/admin   |
+| GET    | /api/v1/parcels/acceptedorders  | get accepted parcel orders            | User          |
+| GET    | /api/v1/parcels/declined        | return a list of declined orders      |user           |
+| PUT    |/api/v1/parcels/1/declined       | Decline a specific order              | Admin         |
+| PUT    | /api/v1/parcels/<id>/cancel     | cancel a spefic order                 | Users         |
 | POST   | /api/v1/auth/login              | Login to the application              | Users/Admin   |
-| GET    | /api/v1/orders/1                | Get a specific order by id            | user/Admin    |
-| GET    | api/v1/orders/intransit         | get orders in transit                 | Admin/users   |
-| DELETE | /api/v1/orders/1                | delete a specific order               | Admin/users   |
-| PUT    | /api/v1/orders/1/completed      | complete an order                     | Admin         |
-| PUT    | /api/v1/orders/1/intransit      | approve an order to be in transit     | Admin         |
-| PUT    | /api/v1/orders/2/approved       | approve a pending order               | Admin         |
-| GET    | /api/v1/orders                  | Get a list of all orders              | Admin/users            |
+| GET    | /api/v1/parcels/<id>            | Get a specific order by id            | user/Admin    |
+| GET    | api/v1/parcels/intransit        | get orders in transit                 | Admin/users   |
+| DELETE | /api/v1/parcels/<id>            | delete a specific order               | Admin/users   |
+| PUT    | /api/v1/parcels/<id>/ompleted   | complete an order                     | Admin         |
+| PUT    | /api/v1/parcels/<id>/intransit  | approve an order to be in transit     | Admin         |
+| PUT    | /api/v1/parcels/<id>/approved   | approve a pending order               | Admin         |
+| GET    | /api/v1/parcels                 | Get a list of all orders              | Admin/users            |
 
 ### Testing
 
