@@ -243,7 +243,7 @@ class TestFoodOrder(unittest.TestCase):
         token = self.get_token()
 
         res = self.client.put(
-            "/parcels/1/cancel",
+            "/api/v1/parcels/1/cancel",
             headers={'content-type': 'application/json',
                      'Authorization': f'Bearer {token}'}
         )
