@@ -6,7 +6,6 @@ from utils import validators
 import datetime
 
 
-
 class PostParcel(Resource):
     '''place parcel order.'''
 
@@ -41,12 +40,14 @@ class PostParcel(Resource):
             "message": "keep tight!Your parcel order has been placed!"
         }, 201
 
+
 class GetOrders(Resource):
-    
+
     @jwt_required
     def get(self):
         orders = Parcel().get_all_orders()
         return {"orders": [order.serialize() for order in orders]}
+
 
 class SpecificOrder(Resource):
     '''fetch a specific parcel order by id'''
@@ -73,16 +74,18 @@ class SpecificOrder(Resource):
             return {"message": "order deleted successfully"}, 200
         return {"message": "order of id {} not found".format(id)}, 404
 
+
 class InTransitOrders(Resource):
-    
+
     @jwt_required
     def get(self):
 
         orders = Parcel().intransit_orders()
         return {"In Transitorder": [order.serialize() for order in orders]}
 
+
 class DeclinedOrders(Resource):
-    
+
     @jwt_required
     def get(self):
         ''''return a list of decloned orders'''
@@ -94,8 +97,9 @@ class DeclinedOrders(Resource):
             }
         return {"message": "no declined orders were found"}, 404
 
+
 class CompletedOrders(Resource):
-    
+
     @jwt_required
     def get(self):
         '''return a list of parcel orders completed by admin'''
@@ -108,9 +112,10 @@ class CompletedOrders(Resource):
             ]
             }, 200
         return {"message": "no completed orders were found"}, 404
-        
+
+
 class CancelOrder(Resource):
-    
+
     @jwt_required
     def put(self, id):
         '''cancel a specific order by id'''
@@ -125,3 +130,17 @@ class CancelOrder(Resource):
             return {"messsage": "order successfully cancelled"}, 200
 
         return {"message": "order of id {} not found".format(id)}, 404
+
+
+class GetAcceptedOrders(Resource):
+
+    @jwt_required
+    def get(self):
+        '''return list of approved orders'''
+
+        return {
+            "approved_orders": [
+                order.serialize() for order in orders
+                if order.status == "approved"
+            ]
+        }, 200
