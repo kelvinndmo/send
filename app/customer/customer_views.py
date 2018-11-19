@@ -48,3 +48,16 @@ class GetOrders(Resource):
         orders = Parcel().get_all_orders()
         return {"orders": [order.serialize() for order in orders]}
 
+class SpecificOrder(Resource):
+    '''fetch a specific parcel order by id'''
+
+    @jwt_required
+    def get(self, id):
+        '''get a specific order by id'''
+
+        order = Parcel().get_by_id(id)
+
+        if order:
+            return {"order": order.serialize()}, 200
+
+        return {"message": "order of id {} not found".format(id)}, 404
