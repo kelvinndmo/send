@@ -40,3 +40,11 @@ class PostParcel(Resource):
         return {
             "message": "keep tight!Your parcel order has been placed!"
         }, 201
+
+class GetOrders(Resource):
+    
+    @jwt_required
+    def get(self):
+        orders = Parcel().get_all_orders()
+        return {"orders": [order.serialize() for order in orders]}
+
