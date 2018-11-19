@@ -107,4 +107,21 @@ class CompletedOrders(Resource):
                 order.serialize() for order in orders
             ]
             }, 200
-        return {"message":"no completed orders were found"},404
+        return {"message": "no completed orders were found"}, 404
+        
+class CancelOrder(Resource):
+    
+    @jwt_required
+    def put(self, id):
+        '''cancel a specific order by id'''
+
+        order = Parcel().get_by_id(id)
+        if order:
+            if order.status == "canceled":
+                return {"message": "order already cancelled"}, 400
+            if order.status != "cancelled" and order.status != "Pending":
+                return {"message": "order already {}".format(order.status)}, 400
+            order.cancel_order(id)
+            return {"messsage": "order successfully cancelled"}, 200
+
+        return {"message": "order of id {} not found".format(id)}, 404
