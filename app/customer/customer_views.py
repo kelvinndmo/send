@@ -72,3 +72,11 @@ class SpecificOrder(Resource):
             order.delete(id)
             return {"message": "order deleted successfully"}, 200
         return {"message": "order of id {} not found".format(id)}, 404
+
+class InTransitOrders(Resource):
+    
+    @jwt_required
+    def get(self):
+
+        orders = Parcel().intransit_orders()
+        return {"In Transitorder": [order.serialize() for order in orders]}
