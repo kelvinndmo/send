@@ -57,3 +57,28 @@ class CompleteOrder(Resource):
 
         return {"message": "Order not found"}, 404
 
+
+class MarkOrderInTransit(Resource):
+    
+    @jwt_required
+    def put(self, id):
+        '''mark order has started being transported'''
+        order = Parcel().get_by_id(id)
+
+        if order:
+            if order.status == "In Transit":
+                return {"message":"Order already in Transit"},400
+            if order.status == "completed" or order.status == "declined":
+                return {"You already marked the order as {}".format(order.status)}, 200
+
+            if order.status == "Pending":
+                return {"message": "please approve the order first"}, 200
+
+            if order.status == "accepted":
+                order.mark_in_transit(id)
+                return {"message": "The order is now on the road!Rember to keep track of the order"}, 200
+
+        return {"message": "The order could not be found!,check on the id please"}, 404
+
+
+
