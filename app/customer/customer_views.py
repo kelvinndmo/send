@@ -93,3 +93,18 @@ class DeclinedOrders(Resource):
                 "declined orders": [order.serialize() for order in orders]
             }
         return {"message": "no declined orders were found"}, 404
+
+class CompletedOrders(Resource):
+    
+    @jwt_required
+    def get(self):
+        '''return a list of parcel orders completed by admin'''
+
+        orders = Parcel().completed_orders()
+
+        if orders:
+            return {"completed orders": [
+                order.serialize() for order in orders
+            ]
+            }, 200
+        return {"message":"no completed orders were found"},404
