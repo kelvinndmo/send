@@ -34,4 +34,29 @@ class Signup(Resource):
         user = User(username, email, password)
         user.add()
 
-        return {"message":"account created successfully"},201
+        return {"message": "account created successfully"}, 201
+
+
+class Login(Resource):
+    def post(self):
+        '''existing user can login'''
+
+        data = request.get_json()
+
+        username = data['username']
+        password = data['password']
+
+        user = User().get_by_username(username)
+        print(user)
+
+        if not user:
+            return {"message": "user not found"}, 404
+        if not check_password_hash(user.password, password):
+            return {"message": "wrong password"}, 400
+
+        token = create_access_token(user.username)
+
+        return {
+            "token": token,
+            "message": f"your were successfully logged in {username}"
+        }, 200
