@@ -11,7 +11,7 @@ class PostParcel(Resource):
 
     @jwt_required
     def post(self):
-        '''place a new parcel order.'''
+        '''place a new parcel order'''
 
         data = request.get_json()
         origin = data['origin']
