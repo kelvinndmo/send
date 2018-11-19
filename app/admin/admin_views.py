@@ -81,4 +81,24 @@ class MarkOrderInTransit(Resource):
         return {"message": "The order could not be found!,check on the id please"}, 404
 
 
+class DeclineOrder(Resource):
+
+    @jwt_required
+    def put(self, id):
+        '''decline a specific order'''
+
+        order = Parcel().get_by_id(id)
+
+        if order:
+
+            if order.status != "Pending":
+                return {"message": "order already {}".format(order.status)}
+
+            order.decline_order(id)
+            return {"message": "Order declined"}
+
+        return {"message": "Order not found"}, 404
+
+
+
 
