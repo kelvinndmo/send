@@ -135,12 +135,15 @@ class CancelOrder(Resource):
 class GetAcceptedOrders(Resource):
 
     @jwt_required
+    
     def get(self):
         '''return list of approved orders'''
+
+        orders = Parcel().accepted_orders()
 
         return {
             "approved_orders": [
                 order.serialize() for order in orders
-                if order.status == "approved"
+                if order.status == "accepted"
             ]
         }, 200
