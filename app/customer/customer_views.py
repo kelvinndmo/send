@@ -61,3 +61,14 @@ class SpecificOrder(Resource):
             return {"order": order.serialize()}, 200
 
         return {"message": "order of id {} not found".format(id)}, 404
+
+    @jwt_required
+    def delete(self, id):
+        '''delete a specific order'''
+
+        order = Parcel().get_by_id(id)
+
+        if order:
+            order.delete(id)
+            return {"message": "order deleted successfully"}, 200
+        return {"message": "order of id {} not found".format(id)}, 404
