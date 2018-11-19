@@ -80,3 +80,16 @@ class InTransitOrders(Resource):
 
         orders = Parcel().intransit_orders()
         return {"In Transitorder": [order.serialize() for order in orders]}
+
+class DeclinedOrders(Resource):
+    
+    @jwt_required
+    def get(self):
+        ''''return a list of decloned orders'''
+
+        orders = Parcel().declined_orders()
+        if orders:
+            return {
+                "declined orders": [order.serialize() for order in orders]
+            }
+        return {"message": "no declined orders were found"}, 404
