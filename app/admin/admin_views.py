@@ -34,5 +34,26 @@ class AcceptStatus(Resource):
             return {"message": "your order has been approved"}, 200
         return {"message": "order not found"}, 404
         
+class CompleteOrder(Resource):
+    
+    @jwt_required
+    def put(self, id):
+        '''mark an order as completed by admin'''
+        order = Parcel().get_by_id(id)
 
+        if order:
+            if order.status == "completed" or order.status == "declined":
+                return {"message": "order already {}".format(order.status)}
+
+            if order.status == "Pending":
+                return {"message": "please approve the order first "}
+
+            if order.status == "In Transit":
+                order.complete_accepted_order(id)
+                return {
+                    "message":
+                    "Your has been order completed awaiting delivery"
+                }
+
+        return {"message": "Order not found"}, 404
 
