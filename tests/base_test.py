@@ -88,21 +88,6 @@ class BaseTest(unittest.TestCase):
             "password": "Kimame123"
         }
 
-
-    def post_parcel(self):
-        """ method to post new food item """
-
-        token = self.get_token_as_admin()
-
-
-        res = self.client.post(
-            "/api/v2/parcels",
-            data=json.dumps(self.post_parcel_data),
-            headers={'content-type': 'application/json',
-                     'Authorization': f'Bearer {token}'}
-        )
-
-        return res
    
     def signup(self):
         """ user signup function """
@@ -178,4 +163,18 @@ class BaseTest(unittest.TestCase):
             headers={'content-type': 'application/json',
                      'Authorization': f'Bearer {token}'}
         )
+        return res
+
+    def post_parcel(self):
+        """ method to post new food item """
+
+        token = self.get_token_as_user()
+
+        res = self.client.post(
+            "/api/v2/parcels",
+            data=json.dumps(self.post_parcel_data),
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+
         return res
