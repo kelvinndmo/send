@@ -14,7 +14,7 @@ class BaseTest(unittest.TestCase):
         self.client = self.app.test_client()
         with self.app.app_context():
             drop()
-            migrate()
+            create()
             create_admin()
 
         self.user_signup_data = {
