@@ -21,7 +21,7 @@ class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
     TESTING = True
     DEBUG = True
-    DB_TEST = os.getenv('DB_TEST')
+    DB_NAME = os.getenv('DB_TEST_NAME')
 
 
 class ProductionConfig(Config):
