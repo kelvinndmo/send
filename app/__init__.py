@@ -2,8 +2,8 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from config import app_config
 from flask_jwt_extended import JWTManager
-from .customer.customer_views import PostParcel, CancelOrder, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
-from .admin.admin_views import CompleteOrder, AcceptStatus, MarkOrderInTransit, DeclineOrder
+from .customer.customer_views import PostParcel, UpdateParcelDestination, CancelOrder, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
+from .admin.admin_views import CompleteOrder, AcceptStatus, MarkOrderInTransit, DeclineOrder, UpdateLocation
 from app.auth.auth_views import Login, Signup
 from .userorders.user_order import SpecificUserorders
 
@@ -38,10 +38,12 @@ def create_app(config_stage):
     auth.add_resource(Signup, '/signup')
     auth.add_resource(Login, '/login')
     customer.add_resource(SpecificOrder, '/<int:id>')
+    customer.add_resource(UpdateParcelDestination, '/<int:id>/destination')
     customer.add_resource(PostParcel, '')
     customer.add_resource(GetOrders, '')
     customer.add_resource(GetAcceptedOrders, '/acceptedorders')
     admin.add_resource(CompleteOrder, '/<int:id>/completed')
+    admin.add_resource(UpdateLocation, '/<int:id>/presentlocation')
     customer.add_resource(CompletedOrders, '/completedorders')
     customer.add_resource(DeclinedOrders, '/declined')
     userorders.add_resource(SpecificUserorders, '/<int:id>/parcels')
