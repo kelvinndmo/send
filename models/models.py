@@ -62,6 +62,20 @@ class User(SendITDB):
         self.connection.commit()
         self.cursor.close()
 
+    def get_by_id(self, id):
+        '''get user by id'''
+        self.cursor.execute('''SELECT * FROM users WHERE id=%s''',
+                            (id, ))
+        user = self.cursor.fetchone()
+
+        self.connection.commit()
+        self.cursor.close()
+
+        if user:
+            return self.objectify_user(user)
+        return None
+
+
     def get_by_username(self, username):
         '''get user by username'''
         self.cursor.execute('''SELECT * FROM users WHERE username=%s''',
@@ -89,6 +103,14 @@ class User(SendITDB):
             return self.objectify_user(user)
         return None
 
+    def serialize(self):
+        '''return an object as dictionary'''
+        return dict(
+            username=self.username,
+            email=self.email,
+            is_admin=self.is_admin
+        )
+
     def objectify_user(self, data):
         '''coerse a tuple into an object'''
 
@@ -102,10 +124,11 @@ class User(SendITDB):
 
 
 class Parcel(SendITDB):
-    def __init__(self, sender=None, origin=None, destination=None, price=None, weight=None, status="Pending"):
+    def __init__(self, sender=None, origin=None, current_location=None, destination=None, price=None, weight=None, status="Pending"):
         super().__init__()
         self.sender = sender
         self.origin = origin
+        self.current_location = current_location
         self.destination = destination
         self.price = price
         self.weight = weight
@@ -119,6 +142,7 @@ class Parcel(SendITDB):
                 id serial PRIMARY KEY,
                 sender VARCHAR NOT NULL,
                 origin VARCHAR NOT NULL,
+                current_location VARCHAR NOT NULL,
                 destination VARCHAR NOT NULL,
                 price INT NOT NULL,
                 weight VARCHAR NOT NULL,
@@ -143,8 +167,8 @@ class Parcel(SendITDB):
     def add(self):
         '''add parcel order to database'''
         self.cursor.execute(
-            '''INSERT INTO parcels(sender, origin,destination,price,weight,status,date) VALUES(%s,%s,%s,%s,%s,%s,%s)''',
-            (self.sender, self.origin, self.destination, self.price, self.weight, self.status, self.date)
+            '''INSERT INTO parcels(sender, origin, current_location, destination,price,weight,status,date) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',
+            (self.sender, self.origin, self.current_location, self.destination, self.price, self.weight, self.status, self.date)
         )
 
         self.connection.commit()
@@ -237,6 +261,24 @@ class Parcel(SendITDB):
             return [self.objectify(order) for order in orders]
         return None
 
+    def orders_by_sender(self, sender):
+        ''' Get orders from the same sender'''
+        self.cursor.execute(
+            """SELECT * FROM parcels WHERE sender=%s""",
+            (sender, )
+        )
+
+        orders_from_specific_sender = self.cursor.fetchall()
+
+        self.connection.commit()
+        self.cursor.close()
+
+        if orders_from_specific_sender:
+            return [
+                self.objectify(accepted_order)
+                for accepted_order in orders_from_specific_sender
+            ]
+        return None
 
     def accepted_orders(self):
         ''' Get orders accepted by admin'''
@@ -275,6 +317,25 @@ class Parcel(SendITDB):
                 for declined_order in declined_orders
             ]
         return None
+
+    def update_location(self, parcel_id):
+        ''' update parcel location'''
+        self.cursor.execute("""
+        UPDATE parcels SET current_location=%s WHERE id=%s
+        """, (self.current_location, parcel_id)
+        )
+        self.connection.commit()
+        self.cursor.close()
+
+    def update_destination(self, parcel_id):
+        ''' update parcel destination'''
+        self.cursor.execute("""
+        UPDATE parcels SET destination=%s WHERE id=%s
+        """, (self.destination, parcel_id)
+        )
+        self.connection.commit()
+        self.cursor.close()
+
 
     def intransit_orders(self):
         '''get orders in transit'''
@@ -317,9 +378,10 @@ class Parcel(SendITDB):
     def serialize(self):
         '''return an object as dictionary'''
         return dict(
-            id=self.id,
+            # id=self.id,
             sender=self.sender,
             origin=self.origin,
+            current_location=self.current_location,
             destination=self.destination,
             weight=self.weight,
             status=self.status,
@@ -332,12 +394,13 @@ class Parcel(SendITDB):
         order = Parcel(
             sender=data[1],
             origin=data[2],
-            destination=data[3],
-            price=data[4],
-            weight=data[5],
-            status=data[6])
+            current_location=data[3],
+            destination=data[4],
+            price=data[5],
+            weight=data[6],
+            status=data[7])
         order.id = data[0]
-        order.date = str(data[7])
+        order.date = str(data[8])
 
         self = order
         return self
