@@ -17,6 +17,7 @@ class PostParcel(Resource):
         origin = data['origin']
         destination = data['destination']
         weight = data['weight']
+        current_location = origin
         price = weight * 10
         sender = get_jwt_identity()
 
@@ -34,10 +35,11 @@ class PostParcel(Resource):
         if type(weight) != int:
             return {'message': "Invalid weight"}, 400
 
-        order = Parcel(sender, origin, destination, price, weight)
+        order = Parcel(sender, origin, current_location, destination, price, weight)
         order.add()
         return {
-            "message": "keep tight!Your parcel order has been placed!"
+            "message": "keep tight!Your parcel order has been placed!",
+            "parcel":order.serialize()
         }, 201
 
 
@@ -147,3 +149,25 @@ class GetAcceptedOrders(Resource):
                 if order.status == "accepted"
             ]
         }, 200
+
+
+class UpdateParcelDestination(Resource):
+
+    @jwt_required
+    def put(self, id):
+        '''update parcel destination '''
+
+        data = request.get_json()
+        destination = data['destination']
+
+        parcel = Parcel().get_by_id(id)
+
+        if parcel:
+            if parcel.status != 'pending':
+                parcel.destination = destination
+                return {
+                    'message': 'destination updated successfully',
+                    'parcel':parcel.serialize()
+                }, 200
+            return {'message': 'parcel already {}'.format(parcel.status)}, 400
+        return {'message': 'parcel not found'}, 404
