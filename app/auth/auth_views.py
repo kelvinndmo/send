@@ -34,7 +34,10 @@ class Signup(Resource):
         user = User(username, email, password)
         user.add()
 
-        return {"message": "account created successfully"}, 201
+        return {
+            "message": "account created successfully",
+            "user":user.serialize()
+            }, 201
 
 
 class Login(Resource):
