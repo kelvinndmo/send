@@ -20,7 +20,7 @@ def admin_access(f):
 
 
 class AcceptStatus(Resource):
-
+    
     @jwt_required
     def put(self, id):
         '''mark an order as approved by admin'''
@@ -99,6 +99,19 @@ class DeclineOrder(Resource):
 
         return {"message": "Order not found"}, 404
 
+class UpdateLocation(Resource):
 
+    @jwt_required
+    def put(self, id):
 
+        data = request.get_json()
+        current_location = data['current_location']
 
+        parcel = Parcel().get_by_id(id)
+
+        if parcel:
+            parcel.current_location = current_location
+            parcel.update_location(id)
+
+            return {'parcel': parcel.serialize()}, 200
+        return {'message':'parcel does not exist'}, 404
