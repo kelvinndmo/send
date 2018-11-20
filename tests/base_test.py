@@ -3,7 +3,7 @@ import json
 
 from app import create_app
 
-from db_test import migrate, drop, create_admin
+from manage import create, drop, create_admin
 
 
 class BaseTest(unittest.TestCase):
