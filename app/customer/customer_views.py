@@ -39,7 +39,7 @@ class PostParcel(Resource):
         order.add()
         return {
             "message": "keep tight!Your parcel order has been placed!",
-            "parcel":order.serialize()
+            "order":order.json_order()
         }, 201
 
 
@@ -152,7 +152,7 @@ class UpdateParcelDestination(Resource):
         parcel = Parcel().get_by_id(id)
 
         if parcel:
-            if parcel.status != 'pending':
+            if parcel.status == 'pending':
                 parcel.destination = destination
                 return {
                     'message': 'destination updated successfully',
