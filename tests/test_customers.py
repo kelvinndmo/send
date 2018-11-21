@@ -81,7 +81,6 @@ class TestPostParcel(BaseTest):
 
         self.assertEqual(response.status_code, 404)
 
-    def test_
 
     def test_reject_order(self):
         """ test to accept order """
