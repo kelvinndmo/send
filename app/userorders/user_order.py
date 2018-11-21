@@ -14,5 +14,5 @@ class SpecificUserorders(Resource):
             if orders:
                all_orders = [order.serialize() for order in orders]
                return {'orders': all_orders}, 200
-            return {'message':'{} has no orders for now'.format(user.username)}
-       return {'message':'user with id {} does not exist'.format(id)}
+            return {'message':'{} has no orders for now'.format(user.username)}, 404
+       return {'message':'user with id {} does not exist'.format(id)},404
