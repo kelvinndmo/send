@@ -84,7 +84,7 @@ class TestFoodOrder(BaseTest):
     def test_reject_order(self):
         """ test to accept order """
 
-        token = self.get_token_as_user()
+        token = self.get_token_as_admin()
 
         self.post_parcel()
 
