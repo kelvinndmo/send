@@ -152,6 +152,17 @@ class BaseTest(unittest.TestCase):
         )
         return res
     
+    def mark_in_transit_order(self):
+        """ accept an order """
+        token = self.get_token_as_admin()
+
+        res = self.client.put(
+            "/api/v2/parcels/1/intransit",
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+        return res
+    
     
 
     def reject_order(self):
