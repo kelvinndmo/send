@@ -72,7 +72,7 @@ class MarkOrderInTransit(Resource):
             if order.status == "In Transit":
                 return {"message":"Order already in Transit"},400
             if order.status == "completed" or order.status == "declined":
-                return {"You already marked the order as {}".format(order.status)}, 200
+                return {"You have already marked the order as {}".format(order.status)}, 200
 
             if order.status == "Pending":
                 return {"message": "please approve the order first"}, 200
