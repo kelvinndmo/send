@@ -12,7 +12,7 @@ def admin_access(f):
     @wraps(f)
     def wrapper_function(*args, **kwargs):
         user = User().get_by_username(get_jwt_identity())
-        if not user.is_admin:
+        if  user.username !="AdminUser":
             return {'message': 'Your cannot access this level'}, 401
         return f(*args, **kwargs)
 
@@ -22,6 +22,7 @@ def admin_access(f):
 class AcceptStatus(Resource):
     
     @jwt_required
+    @admin_access
     def put(self, id):
         '''mark an order as approved by admin'''
 
@@ -37,6 +38,7 @@ class AcceptStatus(Resource):
 class CompleteOrder(Resource):
     
     @jwt_required
+    @admin_access
     def put(self, id):
         '''mark an order as completed by admin'''
         order = Parcel().get_by_id(id)
@@ -61,6 +63,7 @@ class CompleteOrder(Resource):
 class MarkOrderInTransit(Resource):
     
     @jwt_required
+    @admin_access
     def put(self, id):
         '''mark order has started being transported'''
         order = Parcel().get_by_id(id)
@@ -84,6 +87,7 @@ class MarkOrderInTransit(Resource):
 class DeclineOrder(Resource):
 
     @jwt_required
+    @admin_access
     def put(self, id):
         '''decline a specific order'''
 
@@ -102,6 +106,7 @@ class DeclineOrder(Resource):
 class UpdateLocation(Resource):
 
     @jwt_required
+    @admin_access
     def put(self, id):
 
         data = request.get_json()
