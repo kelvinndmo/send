@@ -45,17 +45,20 @@ class CompleteOrder(Resource):
 
         if order:
             if order.status == "completed" or order.status == "declined":
-                return {"message": "order already {}".format(order.status)}
+                return {"message": "order already {}".format(order.status)}, 400
+                
+            if order.status == "accepted":
+                return {"message":"order has only been accepted"},400
 
             if order.status == "Pending":
-                return {"message": "please approve the order first "}
+                return {"message": "please approve the order first "},400
 
             if order.status == "In Transit":
                 order.complete_accepted_order(id)
                 return {
                     "message":
                     "Your has been order completed awaiting delivery"
-                }
+                },200
 
         return {"message": "Order not found"}, 404
 
@@ -72,10 +75,10 @@ class MarkOrderInTransit(Resource):
             if order.status == "In Transit":
                 return {"message":"Order already in Transit"},400
             if order.status == "completed" or order.status == "declined":
-                return {"You have already marked the order as {}".format(order.status)}, 200
+                return {"You have already marked the order as {}".format(order.status)}, 400
 
             if order.status == "Pending":
-                return {"message": "please approve the order first"}, 200
+                return {"message": "please approve the order first"}, 400
 
             if order.status == "accepted":
                 order.mark_in_transit(id)
