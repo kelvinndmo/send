@@ -375,10 +375,24 @@ class Parcel(SendITDB):
             ]
         return None
 
+    def json_order(self):
+        '''return an object as dictionary'''
+        return dict(
+            sender=self.sender,
+            origin=self.origin,
+            current_location=self.current_location,
+            destination=self.destination,
+            weight=self.weight,
+            status=self.status,
+            price=self.price,
+            date=self.date
+        )
+
+
     def serialize(self):
         '''return an object as dictionary'''
         return dict(
-            # id=self.id,
+            id=self.id,
             sender=self.sender,
             origin=self.origin,
             current_location=self.current_location,
