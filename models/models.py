@@ -250,7 +250,7 @@ class Parcel(SendITDB):
         self.cursor.close()
 
     def get_all_orders(self):
-        """ get all available food in the menu"""
+        """ get all placed parcel orders"""
         self.cursor.execute("SELECT * FROM parcels ORDER BY id")
 
         orders = self.cursor.fetchall()
