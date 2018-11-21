@@ -176,6 +176,33 @@ class BaseTest(unittest.TestCase):
         )
         return res
 
+    def cancel_order(self):
+        "cancel an order"
+
+        token = self.get_token_as_user()
+
+        res = self.client.put(
+            "api/v2/parcels/1/cancel",
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+        return res
+
+    def update_destination(self):
+        '''update destination'''
+
+        token = self.get_token_as_user()
+
+        
+        res = self.client.put(
+            "api/v2/parcels/1/destination",
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'}
+        )
+        
+        return res
+
+
     def post_parcel(self):
         """ method to post new food item """
 
