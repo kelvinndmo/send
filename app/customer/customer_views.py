@@ -157,7 +157,7 @@ class UpdateParcelDestination(Resource):
         parcel = Parcel().get_by_id(id)
 
         if parcel:
-            if parcel.status == 'pending':
+            if parcel.status == 'Pending':
                 parcel.destination = destination
                 return {
                     'message': 'destination updated successfully',
