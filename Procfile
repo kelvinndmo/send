@@ -1,2 +1,4 @@
 web: gunicorn run:app
-release: python manage.py db upgrade
+create_db: flask create
+drop_db: flask drop
+create_admin: flask create_admin
