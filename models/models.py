@@ -1,3 +1,4 @@
+import os
 import psycopg2
 from flask import current_app
 from datetime import datetime
@@ -7,10 +8,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class SendITDB:
     def __init__(self):
-        self.db_name = current_app.config.get('DB_NAME')
-        self.db_host = current_app.config.get('DB_HOST')
-        self.db_user = current_app.config.get('DB_USER')
-        self.db_password = current_app.config.get('DB_PASSWORD')
+        self.db_name = os.getenv('DB_NAME')
+        self.db_host = os.getenv('DB_HOST')
+        self.db_user = os.getenv('DB_USER')
+        self.db_password = os.getenv('DB_PASSWORD')
 
         self.connection = psycopg2.connect(
             database=self.db_name,
