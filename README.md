@@ -1,5 +1,5 @@
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
-[![Coverage Status](https://coveralls.io/repos/github/kelvinndmo/send/badge.svg?branch=challenge-3-develop)](https://coveralls.io/github/kelvinndmo/send?branch=challenge-3-develop)
+[![Coverage Status](https://coveralls.io/repos/github/kelvinndmo/send/badge.svg?branch=develop)](https://coveralls.io/github/kelvinndmo/send?branch=develop)
 [![Build Status](https://travis-ci.org/kelvinndmo/send.svg?branch=challenge-3-develop)](https://travis-ci.org/kelvinndmo/send)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d5b456c6aa5a4648a45f2c72346dba4a)](https://www.codacy.com/app/kelvinndmo/send?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kelvinndmo/send&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a236552c6eda78af4c69/maintainability)](https://codeclimate.com/github/kelvinndmo/send/maintainability)
