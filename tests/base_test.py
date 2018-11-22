@@ -3,7 +3,7 @@ import json
 
 from app import create_app
 
-from manage import create, drop, create_admin
+from run import create,drop,create_admin
 
 
 class BaseTest(unittest.TestCase):
