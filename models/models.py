@@ -13,10 +13,10 @@ class SendITDB:
         self.db_password = current_app.config.get('DB_PASSWORD')
 
         self.connection = psycopg2.connect(
-            database="send",
-            host="/tmp/",
-            user="fastfoodfastuser",
-            password="novak254"
+            database=self.db_name,
+            host=self.db_host,
+            user=self.db_user,
+            password=self.db_password
         )
 
         self.cursor = self.connection.cursor()
