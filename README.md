@@ -1,6 +1,4 @@
 ![license](https://img.shields.io/github/license/mashape/apistatus.svg)
-<a href='https://coveralls.io/github/kelvinndmo/send?branch=challenge-3-develop'><img src='https://coveralls.io/repos/github/kelvinndmo/send/badge.svg?branch=develop' alt='Coverage Status' /></a>
-[![Build Status](https://travis-ci.org/kelvinndmo/send.svg?branch=develop)](https://travis-ci.org/kelvinndmo/send)
 [![Coverage Status](https://coveralls.io/repos/github/kelvinndmo/send/badge.svg?branch=develop)](https://coveralls.io/github/kelvinndmo/send?branch=develop)
 [![Build Status](https://travis-ci.org/kelvinndmo/send.svg?branch=challenge-3-develop)](https://travis-ci.org/kelvinndmo/send)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d5b456c6aa5a4648a45f2c72346dba4a)](https://www.codacy.com/app/kelvinndmo/send?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kelvinndmo/send&amp;utm_campaign=Badge_Grade)
