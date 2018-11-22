@@ -48,7 +48,10 @@ class GetOrders(Resource):
     @jwt_required
     def get(self):
         orders = Parcel().get_all_orders()
-        return {"orders": [order.serialize() for order in orders]}
+
+        if orders:
+            return {"orders": [order.serialize() for order in orders]}, 200
+        return {"message":"no orders were found"},404
 
 
 class SpecificOrder(Resource):
@@ -72,7 +75,9 @@ class InTransitOrders(Resource):
     def get(self):
 
         orders = Parcel().intransit_orders()
-        return {"In Transitorder": [order.serialize() for order in orders]}
+        if orders:
+            return {"In Transitorder": [order.serialize() for order in orders]}, 200
+        return {"message":"no intransit orders were found"},404
 
 
 class DeclinedOrders(Resource):
