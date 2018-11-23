@@ -23,14 +23,26 @@ class PostParcel(Resource):
 
         validate = validators.Validators()
 
+        if destination.isdigit():
+            return {"message":"Counter check the destination name"},400
+
+        if type(destination) == int:
+            return {"message":"destination can't be an interger"},400
+
         if not validate.valid_destination_name(destination):
-            return {'message': "destination is invalid"}, 400
+            return {'message': "kindly have a look on the destination name once more"}, 400
+        
+        if origin.isdigit():
+            return {"message":"Counter check the origin name"},400
+
+        if type(origin) == int:
+            return {"message":"origin can't be an interger"},400
 
         if not validate.valid_origin_name(origin):
-            return {'message': "invalid origin name"}, 400
+            return {'message': "kindly have a look on the origin name once more"}, 400
 
         if type(price) != int:
-            return {'message': "Invalid price"}, 400
+            return {'message': "price can only be an interger"}, 400
 
         if type(weight) != int:
             return {'message': "Invalid weight"}, 400
@@ -41,6 +53,7 @@ class PostParcel(Resource):
             "message": "keep tight!Your parcel order has been placed!",
             "order":order.json_order()
         }, 201
+
 
 
 class GetOrders(Resource):
@@ -153,6 +166,13 @@ class UpdateParcelDestination(Resource):
 
         data = request.get_json()
         destination = data['destination']
+
+        validate = validators.Validators()
+
+        if destination.isdigit():
+            return {"message":"destination cannot be only numbers"},400
+        if not validate.valid_destination_name(destination):
+            return {"message":"destination name looks invalid,kindly check"},400
 
         parcel = Parcel().get_by_id(id)
 

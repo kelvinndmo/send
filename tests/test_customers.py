@@ -282,19 +282,19 @@ class TestPostParcel(BaseTest):
         
         self.assertEqual(res.status_code, 404)
 
-    # def test_admin_update_location(self):
+    def test_admin_update_location(self):
 
-    #     token = self.get_token_as_admin()
+        token = self.get_token_as_admin()
 
-    #     self.post_parcel()
-    #     self.accept_order()
+        self.post_parcel()
+        self.accept_order()
         
-    #     res = self.client.put(
-    #         "/api/v2/parcels/1/presentlocation",
-    #         headers={'content-type': 'application/json',
-    #                  'Authorization': f'Bearer {token}'})
+        res = self.client.put(
+            "/api/v2/parcels/1/presentlocation",
+            headers={'content-type': 'application/json',
+                     'Authorization': f'Bearer {token}'})
 
-    #     self.assertEqual(res.status_code,200)
+        self.assertEqual(res.status_code,200)
 
     def test_mark_parcel_in_transit_unapproved(self):
         token = self.get_token_as_admin()

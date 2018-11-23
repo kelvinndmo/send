@@ -204,7 +204,7 @@ class BaseTest(unittest.TestCase):
 
 
     def post_parcel(self):
-        """ method to post new food item """
+        """ method to post new parcel """
 
         token = self.get_token_as_user()
 

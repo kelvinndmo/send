@@ -17,7 +17,7 @@ class Validators:
 
     def valid_password(self, password):
         """validate for password """
-        return re.match("^[a-zA-Z0-9]{2,15}$",
+        return re.match("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{6,15}$",
                         password)
 
     def valid_email(self, email):

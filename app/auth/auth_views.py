@@ -24,7 +24,7 @@ class Signup(Resource):
             return {"message": "invalid email adress"}, 400
 
         if not validate.valid_password(password):
-            return {"message": "Enter the correct password format"}, 400
+            return {"message": "Password should: start with capital letter,contain a digit,min of 6 characters"}, 400
 
         if User().get_by_username(username):
             return {"message": "username already in use"}, 400
