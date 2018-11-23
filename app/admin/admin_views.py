@@ -115,11 +115,27 @@ class UpdateLocation(Resource):
         data = request.get_json()
         current_location = data['current_location']
 
+        validate = validators.Validators()
+
+        if type(current_location) == int:
+            return {"message":"current location can't be a digit"},400
+
+        if current_location.isdigit():
+            return {"message":"current_location cannot be only numbers"},400
+        if not validate.valid_destination_name (current_location):
+            return {"message":"current_location looks invalid,kindly check"},400
+
         parcel = Parcel().get_by_id(id)
 
         if parcel:
-            parcel.current_location = current_location
-            parcel.update_location(id)
+            if parcel.status == "In Transit":
+                if parcel.current_location == current_location:
+                    return {"message":f"parcel already in {parcel.current_location}"}
 
-            return {'parcel': parcel.serialize()}, 200
+                parcel.current_location = current_location
+                parcel.update_location(id)
+
+                return {'parcel': parcel.serialize()}, 200
+            return {"message":"parcel status is {},you can only update In transit orders".format(parcel.status)}
+    
         return {'message':'parcel does not exist'}, 404
