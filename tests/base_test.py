@@ -40,11 +40,6 @@ class BaseTest(unittest.TestCase):
             "destination": "*****123",
             "weight": 25
         }
-        # self.update_data = {
-        #     "origin": "keroka",
-        #     "destination": "kiambuu",
-        #     "weight": 20
-        # }
         self.invalid_origin_name = {
             "origin": "***********1",
             "destination": "kisii",
@@ -67,26 +62,26 @@ class BaseTest(unittest.TestCase):
         }
         self.invalid_password_data = {
             "username": "mwanzia",
-            "email": "mwanzia@gmail.com",
+            "email": "ndemo@gmail.com",
             "password": "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         }
 
         self.invalid_email_data = {
-            "username": "daviskk",
+            "username": "novakkk",
             "email": "davis",
-            "password": "kimame123",
+            "password": "kelvin123",
             "is_admin": 1
         }
         self.invalid_username_data = {
             "username": "*****1",
-            "email": "davis@gmail.com",
-            "password": "kimame123",
+            "email": "kelvin@gmail.com",
+            "password": "kelvin123",
             "is_admin": 1
         }
         self.user_doest_not_exist_data = {
-            "username": "kimametsrt`",
-            "password": "Kimame123"
-        }
+            "username": "onkundidndem`",
+            "password": "Novak254"
+        } 
 
    
     def signup(self):
