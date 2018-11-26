@@ -396,6 +396,3 @@ class TestPostParcel(BaseTest):
                      'Authorization': f'Bearer {token}'}
         )
         self.assertEqual(response.status_code, 404)
-    
-   
-        
