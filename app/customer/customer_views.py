@@ -187,46 +187,16 @@ class UpdateParcelOrigin(Resource):
 
     @jwt_required
     def put(self, id):
-        '''update parcel origin '''
+        '''update parcel weight and price '''
 
         data = request.get_json()
-        origin = data['origin']
-
-        validate = validators.Validators()
-
-        if origin.isdigit():
-            return {"message":"destination cannot be only numbers"},400
-        if not validate.valid_destination_name(origin):
-            return {"message":"origin name looks invalid,kindly check"},400
-
-        parcel = Parcel().get_by_id(id)
-
-        if parcel:
-            if parcel.status == 'Pending':
-                parcel.origin = origin
-                return {
-                    'message': 'origin updated successfully',
-                    'parcel':parcel.serialize()
-                }, 200
-            return {'message': 'parcel already {}'.format(parcel.status)}, 400
-        return {'message': 'parcel not found'}, 404
-    
- class UpdateParcelWeight(Resource):
-    
-    @jwt_required
-    def put(self, id):
-        
-        '''update parcel origin '''
-
-        data = request.get_json()
-        wieght = int(data['weight'])
+        weight = int(data['weight'])
         price = weight * 10
 
         validate = validators.Validators()
 
         if type(weight) != int:
-            return {'message': "Invalid weight"}, 400
-
+            return {"message":"Weight can only be an interger"},400
         parcel = Parcel().get_by_id(id)
 
         if parcel:
@@ -234,8 +204,12 @@ class UpdateParcelOrigin(Resource):
                 parcel.weight = weight
                 parcel.price = price
                 return {
-                    'message': 'weight and price updated successfully',
+                    'message': 'price and weight updated successfully',
                     'parcel':parcel.serialize()
                 }, 200
             return {'message': 'parcel already {}'.format(parcel.status)}, 400
         return {'message': 'parcel not found'}, 404
+    
+   
+    
+
