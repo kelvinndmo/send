@@ -183,7 +183,7 @@ class UpdateParcelDestination(Resource):
             return {'message': 'parcel already {}'.format(parcel.status)}, 400
         return {'message': 'parcel not found'}, 404
     
-class UpdateParcelDestination(Resource):
+class UpdateParcelOrigin(Resource):
 
     @jwt_required
     def put(self, id):
