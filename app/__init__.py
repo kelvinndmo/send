@@ -44,6 +44,7 @@ def create_app(config_stage):
     auth.add_resource(Login, '/login')
     customer.add_resource(SpecificOrder, '/<int:id>')
     customer.add_resource(UpdateParcelDestination, '/<int:id>/destination')
+    customer.add_resource(UpdateParcelOrigin, '/<int:id>/origin')
     customer.add_resource(PostParcel, '')
     customer.add_resource(GetOrders, '')
     customer.add_resource(GetAcceptedOrders, '/acceptedorders')
