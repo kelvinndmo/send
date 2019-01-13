@@ -212,9 +212,10 @@ class UpdateParcelOrigin(Resource):
         return {'message': 'parcel not found'}, 404
     
  class UpdateParcelWeight(Resource):
-
+    
     @jwt_required
     def put(self, id):
+        
         '''update parcel origin '''
 
         data = request.get_json()
