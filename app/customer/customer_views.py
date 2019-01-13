@@ -210,6 +210,34 @@ class UpdateParcelOrigin(Resource):
             return {'message': 'parcel already {}'.format(parcel.status)}, 400
         return {'message': 'parcel not found'}, 404
     
+class UpdateParcelWeight(Resource):
+
+    @jwt_required
+    def put(self, id):
+        '''update parcel origin '''
+
+        data = request.get_json()
+        weight = int(data['weight'])
+        price = weight * 10
+
+        validate = validators.Validators()
+
+        if type(weight) != int:
+            return {"message":"weight can only be an interger"},400
+
+        parcel = Parcel().get_by_id(id)
+
+        if parcel:
+            if parcel.status == 'Pending':
+                parcel.weight = weight
+                parcel.price = price
+                return {
+                    'message': 'weight and price updated successfully',
+                    'parcel':parcel.serialize()
+                }, 200
+            return {'message': 'parcel already {}'.format(parcel.status)}, 400
+        return {'message': 'parcel not found'}, 404
+    
    
     
 
