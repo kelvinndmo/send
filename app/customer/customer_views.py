@@ -16,7 +16,7 @@ class PostParcel(Resource):
         data = request.get_json()
         origin = data['origin']
         destination = data['destination']
-        weight = data['weight']
+        weight = int(data['weight'])
         current_location = origin
         price = weight * 10
         sender = get_jwt_identity()
@@ -40,9 +40,6 @@ class PostParcel(Resource):
 
         if not validate.valid_origin_name(origin):
             return {'message': "kindly have a look on the origin name once more"}, 400
-
-        if type(price) != int:
-            return {'message': "price can only be an interger"}, 400
 
         if type(weight) != int:
             return {'message': "Invalid weight"}, 400
