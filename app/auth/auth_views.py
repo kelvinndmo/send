@@ -60,6 +60,7 @@ class Login(Resource):
         token = create_access_token(user.username)
 
         return {
+            "id":user.id,
             "token": token,
             "message": f"your were successfully logged in {username}"
         }, 200
