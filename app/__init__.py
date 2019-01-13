@@ -3,7 +3,7 @@ from flask_restful import Api
 from flask_cors import CORS
 from config import app_config
 from flask_jwt_extended import JWTManager
-from .customer.customer_views import PostParcel, UpdateParcelDestination, CancelOrder, GetOrders, SpecificOrder, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
+from .customer.customer_views import PostParcel, UpdateParcelDestination, CancelOrder, GetOrders, SpecificOrder,UpdateParcelDestination, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
 from .admin.admin_views import CompleteOrder, AcceptStatus, MarkOrderInTransit, DeclineOrder, UpdateLocation
 from app.auth.auth_views import Login, Signup
 from .userorders.user_order import SpecificUserorders
