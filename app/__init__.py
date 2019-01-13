@@ -3,7 +3,7 @@ from flask_restful import Api
 from flask_cors import CORS
 from config import app_config
 from flask_jwt_extended import JWTManager
-from .customer.customer_views import PostParcel, UpdateParcelDestination, CancelOrder, GetOrders, SpecificOrder,UpdateParcelOrigin, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
+from .customer.customer_views import PostParcel, UpdateParcelDestination, CancelOrder,UpdateParcelWeight, GetOrders, SpecificOrder,UpdateParcelOrigin, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
 from .admin.admin_views import CompleteOrder, AcceptStatus, MarkOrderInTransit, DeclineOrder, UpdateLocation
 from app.auth.auth_views import Login, Signup
 from .userorders.user_order import SpecificUserorders
@@ -44,6 +44,7 @@ def create_app(config_stage):
     auth.add_resource(Login, '/login')
     customer.add_resource(SpecificOrder, '/<int:id>')
     customer.add_resource(UpdateParcelDestination, '/<int:id>/destination')
+    customer.add_resource(UpdateParcelWeight, '/<int:id>/weight')
     customer.add_resource(UpdateParcelOrigin, '/<int:id>/origin')
     customer.add_resource(PostParcel, '')
     customer.add_resource(GetOrders, '')
