@@ -187,24 +187,25 @@ class UpdateParcelOrigin(Resource):
 
     @jwt_required
     def put(self, id):
-        '''update parcel weight and price '''
+        '''update parcel origin '''
 
         data = request.get_json()
-        weight = int(data['weight'])
-        price = weight * 10
+        origin = data['origin']
 
         validate = validators.Validators()
+        if origin.isdigit():
+            return {"message":"origin cannot be only numbers"},400
+        if not validate.valid_destination_name(origin):
+            return {"message":"origin name looks invalid,kindly check"},400
 
-        if type(weight) != int:
-            return {"message":"Weight can only be an interger"},400
         parcel = Parcel().get_by_id(id)
 
         if parcel:
             if parcel.status == 'Pending':
-                parcel.weight = weight
-                parcel.price = price
+                parcel.origin = origin
+            
                 return {
-                    'message': 'price and weight updated successfully',
+                    'message': 'origin updated successfully',
                     'parcel':parcel.serialize()
                 }, 200
             return {'message': 'parcel already {}'.format(parcel.status)}, 400
