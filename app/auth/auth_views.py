@@ -24,7 +24,10 @@ class Signup(Resource):
             return {"message": "invalid email adress"}, 400
 
         if not validate.valid_password(password):
-            return {"message": "Password should: start with capital letter,contain a digit,min of 6 characters"}, 400
+            return {
+                "message":
+                    "Password should: contain a special character, \n \
+                     and be at least 6 characters"}, 400
 
         if User().get_by_username(username):
             return {"message": "username already in use"}, 400
@@ -36,8 +39,8 @@ class Signup(Resource):
 
         return {
             "message": "account created successfully",
-            "user":user.serialize()
-            }, 201
+            "user": user.serialize()
+        }, 201
 
 
 class Login(Resource):
@@ -60,7 +63,7 @@ class Login(Resource):
         token = create_access_token(user.username)
 
         return {
-            "id":user.id,
+            "id": user.id,
             "token": token,
             "message": f"your were successfully logged in {username}"
         }, 200
