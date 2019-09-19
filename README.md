@@ -110,6 +110,4 @@ Kelvin Onkundi Ndemo
 
 MIT
 
-## Acknowledgement
 
-Andela Bootcamp - cohort 34
