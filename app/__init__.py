@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_restful import Api
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 from config import app_config
 from flask_jwt_extended import JWTManager
 from .customer.customer_views import PostParcel, UpdateParcelDestination, CancelOrder,UpdateParcelWeight, GetOrders, SpecificOrder,UpdateParcelOrigin, InTransitOrders, GetAcceptedOrders, DeclinedOrders, CompletedOrders
@@ -18,7 +18,7 @@ def create_app(config_stage):
     app = Flask(__name__)
     app.config.from_object(app_config[config_stage])
     
-    CORS(app)
+    CORS(app,support_credentials=True)
     
 
     jwt.init_app(app)
