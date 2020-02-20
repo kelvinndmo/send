@@ -18,7 +18,7 @@ def create_app(config_stage):
     app = Flask(__name__)
     app.config.from_object(app_config[config_stage])
     
-    CORS(app,support_credentials=True)
+    CORS(app,resources={r"/api/*": {"origins": "http://localhost:3000"}})
     
 
     jwt.init_app(app)
