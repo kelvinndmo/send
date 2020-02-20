@@ -19,6 +19,7 @@ def create_app(config_stage):
     app.config.from_object(app_config[config_stage])
     
     CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     
 
     jwt.init_app(app)
